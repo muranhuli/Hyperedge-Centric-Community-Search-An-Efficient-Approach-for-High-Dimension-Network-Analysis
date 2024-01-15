@@ -57,7 +57,7 @@ int compute(vector<int> &a, vector<int> &b)
 
 void getGraph(const string &str, vector<vector<int>> &hyperEdge, vector<vector<int>> &incidentHyperedge, int x)
 {
-    string filename = "/home/liuyu/C++Projects/graphData/hypergraph/" + str;
+    string filename = str;
     ifstream fin(filename, ios::in);
     if (!fin)
         throw runtime_error("Could not open file " + str);
