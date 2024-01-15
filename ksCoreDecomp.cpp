@@ -96,12 +96,8 @@ void getGraph(const string &str, vector<vector<int>> &hyperEdge, vector<vector<i
     }
 }
 
-double kxCoreDecomp(const string &file, vector<vector<int>> &hyperEdge, vector<vector<int>> &incidentHyperedge, int x, vector<int> &cE)
+double ksCoreDecomp(const string &file, vector<vector<int>> &hyperEdge, vector<vector<int>> &incidentHyperedge, int x, vector<int> &cE)
 {
-// #pragma omp critical
-//     {
-//         cout << "file = " << file << " x = " << x << " start!" << endl;
-//     }
     auto t1 = std::chrono::steady_clock::now();
     cE.resize(hyperEdge.size(), 0);
     vector<int> dE(hyperEdge.size(), 0);
@@ -137,16 +133,12 @@ double kxCoreDecomp(const string &file, vector<vector<int>> &hyperEdge, vector<v
     }
     auto t2 = std::chrono::steady_clock::now();
     double dr_ns = std::chrono::duration<double, std::nano>(t2 - t1).count();
-// #pragma omp critical
-//     {
-//         cout << "file = " << file << " x = " << x << " done!" << endl;
-//     }
     return dr_ns;
 }
 
 void output(const string &file, int x, vector<int> &cE)
 {
-    string filename = "./result/kxCoreValue/" + file + "-" + to_string(x) + "-coreValue.txt";
+    string filename = "./result/ksCoreValue/" + file + "-" + to_string(x) + "-coreValue.txt";
     ofstream fout;
     fout.open(filename, ios::out);
     if (!fout.is_open())
@@ -177,21 +169,17 @@ int main()
     {
         for (int j = 2; j <= 10; j++)
         {
-            // #pragma omp critical
-            // {
-            //     cout<<"i = "<<i<<" j = "<<j<<endl;
-            // }
             vector<vector<int>> hyperEdge;
             vector<vector<int>> incidentHyperedge;
             getGraph(files[i], hyperEdge, incidentHyperedge, j);
             vector<int> cE;
             double t = 0;
-            t = kxCoreDecomp(files[i], hyperEdge, incidentHyperedge, j, cE);
+            t = ksCoreDecomp(files[i], hyperEdge, incidentHyperedge, j, cE);
             time[i][j] = t;
             output(files[i], j, cE);
         }
     }
-    string filename = "./result/time-kxCoreValue.txt";
+    string filename = "./result/time-ksCoreValue.txt";
     ofstream fout(filename, ios::out);
     if (!fout)
     {
