@@ -23,7 +23,6 @@ typedef pair<int, int> PII;
 const int N = 2 * 1e6;
 omp_lock_t lock;
 
-// 重载比较函数
 struct myCmp
 {
     bool operator()(const PII &a, const PII &b) const
@@ -102,7 +101,6 @@ double ksCoreDecomp(const string &file, vector<vector<int>> &hyperEdge, vector<v
     cE.resize(hyperEdge.size(), 0);
     vector<int> dE(hyperEdge.size(), 0);
     vector<bool> visitedEdge(hyperEdge.size(), false);
-    // 计算每个边的度
     for (int i = 0; i < hyperEdge.size(); i++)
     {
         dE[i] = int(incidentHyperedge.at(i).size());
@@ -155,7 +153,6 @@ int main()
 {
     omp_set_num_threads(100);
     string fileList = "NDCC TaMS NDCS TaAU ThAU ThMS CoMH CoGe";
-    // 将fileList中的文件名读入到vector中
     std::vector<std::string> files;
     std::istringstream iss(fileList);
     std::string file;
